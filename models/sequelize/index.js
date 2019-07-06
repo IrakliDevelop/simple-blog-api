@@ -16,7 +16,7 @@ const init = () => {
     fs.readdirSync(__dirname).forEach(fname => {
         if (fname.match(/\.js$/) !== null && fname !== 'index.js') {
             const modelName = capitalize(fname.replace('.js', ''));
-            _models[modelName] = sequelize.import(path.joi(__dirname, fname));
+            _models[modelName] = sequelize.import(path.join(__dirname, fname));
         }
     });
 
@@ -30,7 +30,10 @@ const init = () => {
         return typeof _models[model].loadScopes === 'function' && _models[model].loadScopes(_models);
     });
 
-    sequelize.sync({ alter: true });
+    /*
+    only need this for the first run
+     sequelize.sync({ alter: true });
+    */
 };
 
 const getModel = name => {

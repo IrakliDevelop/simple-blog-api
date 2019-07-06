@@ -31,4 +31,6 @@ module.exports = function (sequelize, DataTypes) {
     model.prototype.plain = function () {
         return this.get({ plain: true });
     };
+
+    return model;
 };
