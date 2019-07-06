@@ -13,6 +13,11 @@
         "ecmaVersion": 2018
     },
     "rules": {
-        "func-names": "off"
+        "no-console": "off",
+        "func-names": "off",
+        "indent": ["error", 4],
+        "no-underscore-dangle": "off",
+        "arrow-parens": "off",
+        "arrow-body-style": "off"
     }
 }
