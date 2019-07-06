@@ -27,7 +27,25 @@ module.exports = function (sequelize, DataTypes) {
         model.belongsTo(models.User);
     };
 
+    // TODO: test this
+    model.updateOrCreateContent = async function (blogpost) {
+        const [content, created] = await this.findOrCreate({
+            where: { id: blogpost.id }, defaults: { ...blogpost.content.toJSON() },
+        });
+
+        if (!created) return content.update(blogpost.content);
+        return content;
+    };
+
     // instance methods
+
+    model.prototype.updateBlogpost = function (blogPost) {
+        return this.update(blogPost.toJSON(), {
+            where: {
+                id: blogPost.id,
+            },
+        });
+    };
     model.prototype.plain = function () {
         return this.get({ plain: true });
     };
