@@ -1,6 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     const options = {
         indexes: [
+            { unique: true, fields: ['username'], name: 'users_username_idx' },
             { fields: ['createdAt', 'updatedAt'], name: 'users_created_updated_at_idx' },
         ],
     };
