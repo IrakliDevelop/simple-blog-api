@@ -1,3 +1,6 @@
+const bcrypt = require('bcryptjs');
+
+
 module.exports = function (sequelize, DataTypes) {
     const options = {
         indexes: [
@@ -37,6 +40,8 @@ module.exports = function (sequelize, DataTypes) {
         model.hasMany(models.Blogpost);
     };
 
+    // scopes
+
     model.loadScopes = function (models) {
         this.addScope('withPosts', {
             include: [{
@@ -46,7 +51,22 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
 
+    // methods
+    model.findByName = function (username) {
+        return this.scope('withPosts').findOne({
+            where: { username },
+        });
+    };
+
     // instance methods
+
+    model.prototype.generateHash = function (password) {
+        return bcrypt.hashSync(password, bcrypt.getSaltSync(8), null);
+    };
+
+    model.prototype.validatePassword = function (password) {
+        return bcrypt.compare(password || '', this.password);
+    };
 
     model.prototype.plain = function () {
         return this.get({ plain: true });
