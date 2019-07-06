@@ -37,6 +37,15 @@ module.exports = function (sequelize, DataTypes) {
         model.hasMany(models.Blogpost);
     };
 
+    model.loadScopes = function (models) {
+        this.addScope('withPosts', {
+            include: [{
+                model: models.Blogpost,
+                required: false,
+            }],
+        });
+    };
+
     // instance methods
 
     model.prototype.plain = function () {
