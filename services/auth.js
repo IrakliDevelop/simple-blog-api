@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { CustomError } = require('../utils');
-const models = require('../models');
+const models = require('../models/sequelize');
 const config = require('../config');
 
 // TODO: test everything
@@ -12,7 +12,7 @@ const config = require('../config');
  */
 module.exports.auth = async function ({ username, password }) {
     const userModel = models.getModel('User');
-    const user = userModel.findByName(username);
+    const user = await userModel.findByName(username);
 
     if (!user) {
         throw new CustomError({ status: 404, message: 'User not found', code: 'ERROR_USER_NOT_FOUND' });
@@ -35,20 +35,26 @@ module.exports.getAuthToken = function (user, { ipAddress }) {
 };
 
 /**
- * creates new user based on provided username and password
+ * creates new user based on provided credentials
  * @param username {string}
  * @param password {string}
+ * @param firstname {string}
+ * @param lastname {string}
  * @returns {Promise<{code: number, message: string, status: string}>}
  */
-module.exports.register = async function ({ username, password }) {
+module.exports.register = async function ({
+    username, password, firstname, lastname,
+}) {
     const userModel = models.getModel('User');
 
-    if (userModel.findByName(username)) {
+    if (await userModel.findByName(username)) {
         throw new CustomError({ status: 105, message: 'Username already taken' });
     }
-    const generatedPassword = userModel.generateHash(password);
+    const generatedPassword = await userModel.generateHash(password);
     try {
-        await userModel.createUser({ username, password: generatedPassword });
+        await userModel.createUser({
+            username, password: generatedPassword, firstname, lastname,
+        });
 
         return {
             status: 'OK',
