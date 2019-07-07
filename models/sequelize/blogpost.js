@@ -28,8 +28,17 @@ module.exports = function (sequelize, DataTypes) {
         model.hasMany(models.Comment);
     };
 
+    model.loadScopes = function (models) {
+        this.addScope('withComments', {
+            include: [{
+                model: models.Comment,
+                required: false,
+            }],
+        });
+    };
+
     model.findById = function (id) {
-        return this.findByPk(id);
+        return this.scope('withComments').findByPk(id);
     };
 
     // TODO: test this
