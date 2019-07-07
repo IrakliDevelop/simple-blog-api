@@ -28,7 +28,7 @@ async function onAuthRequest(req, res, next) {
     const { username, password } = req.body;
     try {
         const user = await Auth.auth({ username, password });
-        const token = Auth.getAuthToken(omit(['password'], user), {
+        const token = Auth.getAuthToken(omit(['password', 'blogposts'], user), {
             ipAddress: req.connection.remoteAddress,
         });
         return res.json({ token });
