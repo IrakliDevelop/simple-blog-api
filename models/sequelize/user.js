@@ -59,6 +59,10 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
 
+    model.findById = function (id) {
+        return this.findByPk(id);
+    };
+
     model.createUser = function ({
         username, password, firstname, lastname,
     }) {
