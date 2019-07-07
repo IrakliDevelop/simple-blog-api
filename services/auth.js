@@ -4,6 +4,12 @@ const models = require('../models');
 const config = require('../config');
 
 // TODO: test everything
+/**
+ * authenticates user based on provided username and password
+ * @param username {string}
+ * @param password {string}
+ * @returns {Promise<never|*>}
+ */
 module.exports.auth = async function ({ username, password }) {
     const userModel = models.getModel('User');
     const user = userModel.findByName(username);
@@ -18,10 +24,22 @@ module.exports.auth = async function ({ username, password }) {
     return user.plain();
 };
 
+/**
+ * generates and returns jwt token based on provided user and ipAddress
+ * @param user {any}
+ * @param ipAddress {string}
+ * @returns {*}
+ */
 module.exports.getAuthToken = function (user, { ipAddress }) {
     return jwt.sign({ ...user, ipAddress }, config.jwt.secret, config.jwt.options);
 };
 
+/**
+ * creates new user based on provided username and password
+ * @param username {string}
+ * @param password {string}
+ * @returns {Promise<{code: number, message: string, status: string}>}
+ */
 module.exports.register = async function ({ username, password }) {
     const userModel = models.getModel('User');
 
