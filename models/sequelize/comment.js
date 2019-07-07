@@ -21,4 +21,6 @@ module.exports = function (sequelize, DataTypes) {
         model.belongsTo(models.User);
         model.belongsTo(models.Blogpost);
     };
+
+    return model;
 };
