@@ -9,6 +9,7 @@ router.post('/edit', requireAuth, onUpdateBlogPostRequest);
 async function onNewBlogPostRequest(req, res, next) {
     const { user } = req;
     const blogPost = req.body;
+    // TODO: implement userBlogPost middleware instead of hard-coded checking
     blogPost.userId = user.id;
     try {
         const result = await Blogpost.createBlogPost(blogPost);
