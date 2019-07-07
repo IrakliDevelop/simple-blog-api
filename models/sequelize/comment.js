@@ -22,5 +22,13 @@ module.exports = function (sequelize, DataTypes) {
         model.belongsTo(models.Blogpost);
     };
 
+    model.createComment = function (comment) {
+        return this.create(comment);
+    };
+
+    model.updateComment = function (comment) {
+        return this.update(comment);
+    };
+
     return model;
 };
