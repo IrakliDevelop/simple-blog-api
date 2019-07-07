@@ -27,7 +27,21 @@ module.exports = function (sequelize, DataTypes) {
     };
 
     model.updateComment = function (comment) {
-        return this.update(comment);
+        return this.update(comment, {
+            where: {
+                id: comment.id,
+            },
+        });
+    };
+
+    model.findById = function (id) {
+        return this.findByPk(id);
+    };
+
+    // instance methods
+
+    model.prototype.plain = function () {
+        return this.get({ plain: true });
     };
 
     return model;
