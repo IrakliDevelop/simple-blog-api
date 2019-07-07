@@ -44,11 +44,15 @@ module.exports = function (sequelize, DataTypes) {
     // TODO: test this
     model.updateOrCreateContent = async function (blogpost) {
         const [content, created] = await this.findOrCreate({
-            where: { id: blogpost.id }, defaults: { ...blogpost.content.toJSON() },
+            where: { id: blogpost.id }, defaults: { ...blogpost },
         });
 
         if (!created) return content.update(blogpost.content);
         return content;
+    };
+
+    model.createBlogPost = function (blogpost) {
+        return this.create(blogpost);
     };
 
     // instance methods

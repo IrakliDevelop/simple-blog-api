@@ -28,6 +28,7 @@ app.get('', (req, res) => {
 // setup routes
 app.use('/api/auth', routes.Auth);
 app.use('/api/user', routes.User);
+app.use('/api/blogpost', routes.Blogpost);
 
 app.listen('3000', () => {
     console.log('server is running at port 3000');

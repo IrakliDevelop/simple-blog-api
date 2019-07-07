@@ -10,7 +10,32 @@ module.exports.getBlogPostById = async function (id) {
         throw new CustomError({
             message: 'BlogPost not found',
             status: 404,
-            error: 'ERROR_BLOGPOST_NOT_FOUND',
+            code: 'ERROR_BLOGPOST_NOT_FOUND',
         });
+    }
+};
+
+module.exports.createBlogPost = async function (blogPost) {
+    const blogPostModel = models.getModel('Blogpost');
+
+    if (!blogPost.content) {
+        throw new CustomError({
+            message: 'BlogPost content mustn\'t be empty',
+            status: 406,
+            code: 'ERROR_BLOGPOST_EMPTY_CONTENT',
+        });
+    }
+    try {
+        await blogPostModel.createBlogPost(blogPost);
+        return {
+            status: 'OK',
+            code: 200,
+        };
+    } catch (err) {
+        console.error(err);
+        return {
+            code: 503,
+            error: 'Internal server error',
+        };
     }
 };
