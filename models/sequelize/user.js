@@ -59,18 +59,22 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
 
-    model.createUser = function ({ username, password }) {
+    model.createUser = function ({
+        username, password, firstname, lastname,
+    }) {
         return this.create({
             username,
             password,
+            firstname,
+            lastname,
         });
     };
 
-    // instance methods
-
-    model.prototype.generateHash = function (password) {
-        return bcrypt.hashSync(password, bcrypt.getSaltSync(8), null);
+    model.generateHash = function (password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     };
+
+    // instance methods
 
     model.prototype.validatePassword = function (password) {
         return bcrypt.compare(password || '', this.password);

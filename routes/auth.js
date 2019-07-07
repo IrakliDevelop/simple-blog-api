@@ -5,13 +5,17 @@ const { Auth } = require('../services/index');
 const router = express.Router();
 
 
-router.post('register', onRegisterRequest);
-router.post('auth', onAuthRequest);
+router.post('', onAuthRequest);
+router.post('/register', onRegisterRequest);
 
 async function onRegisterRequest(req, res, next) {
-    const { username, password } = req.body;
+    const {
+        username, password, firstname, lastname,
+    } = req.body;
     try {
-        const result = await Auth.register({ username, password });
+        const result = await Auth.register({
+            username, password, firstname, lastname,
+        });
 
         return res.json(result);
     } catch (err) {
