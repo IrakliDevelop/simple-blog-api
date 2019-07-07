@@ -51,7 +51,7 @@ module.exports.updateBlogPost = async function (blogPost) {
         });
     }
     try {
-        const foundBlogPost = blogPostModel.findById(blogPost.id);
+        const foundBlogPost = await blogPostModel.findById(blogPost.id);
         await foundBlogPost.updateBlogPost(blogPost);
         return {
             status: 'OK',
