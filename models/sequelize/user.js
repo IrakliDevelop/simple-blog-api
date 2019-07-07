@@ -59,6 +59,13 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
 
+    model.createUser = function ({ username, password }) {
+        return this.create({
+            username,
+            password,
+        });
+    };
+
     // instance methods
 
     model.prototype.generateHash = function (password) {
