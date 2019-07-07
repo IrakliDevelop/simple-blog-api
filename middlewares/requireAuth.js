@@ -9,7 +9,7 @@ const getToken = authorization => {
     return authorization;
 };
 
-const verifYToken = token => {
+const verifyToken = token => {
     return new Promise((resolve, reject) => {
         if (!token) return reject();
 
@@ -28,7 +28,7 @@ module.exports = (req, res, next) => {
     const token = getToken(req.headers.authorization);
     if (!token) return onUnauthorized(res);
 
-    return verifYToken(token).then(decoded => {
+    return verifyToken(token).then(decoded => {
         req.user = decoded;
         return next();
     }).catch(() => {
