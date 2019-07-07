@@ -38,6 +38,7 @@ module.exports = function (sequelize, DataTypes) {
 
     model.associate = (models) => {
         model.hasMany(models.Blogpost);
+        model.hasMany(models.Comment);
     };
 
     // scopes

@@ -25,6 +25,11 @@ module.exports = function (sequelize, DataTypes) {
 
     model.associate = (models) => {
         model.belongsTo(models.User);
+        model.hasMany(models.Comment);
+    };
+
+    model.findById = function (id) {
+        return this.findByPk(id);
     };
 
     // TODO: test this
