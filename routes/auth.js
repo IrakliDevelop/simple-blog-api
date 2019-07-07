@@ -1,6 +1,6 @@
 const express = require('express');
 const { omit } = require('ramda');
-const { Auth } = require('../services/index');
+const { Auth } = require('../services');
 
 const router = express.Router();
 
