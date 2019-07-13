@@ -9,8 +9,8 @@ module.exports.getBlogPostById = async function (id) {
         console.error(err);
         throw new CustomError({
             message: 'BlogPost not found',
-            status: 404,
-            code: 'ERROR_BLOGPOST_NOT_FOUND',
+            code: 404,
+            status: 'ERROR_BLOGPOST_NOT_FOUND',
         });
     }
 };
