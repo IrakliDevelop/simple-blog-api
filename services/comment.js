@@ -7,15 +7,15 @@ module.exports.createComment = async function (comment) {
     if (!comment.userId || !comment.blogpostId) {
         throw new CustomError({
             message: 'comment should have an user and a blogpost',
-            code: 406,
-            status: 'NO_USER_AND_BLOGPOST_FOR_COMMENT_ERROR',
+            status: 406,
+            code: 'NO_USER_AND_BLOGPOST_FOR_COMMENT_ERROR',
         });
     }
     if (!comment.content) {
         throw new CustomError({
             message: 'Comment can\'t be empty',
-            code: 406,
-            status: 'NO_EMPTY_COMMENT_BODY_ERROR',
+            status: 406,
+            code: 'NO_EMPTY_COMMENT_BODY_ERROR',
         });
     }
     try {
@@ -29,8 +29,8 @@ module.exports.createComment = async function (comment) {
         console.error(err);
         throw new CustomError({
             message: 'Internal server error',
-            code: 503,
-            status: 'INTERNAL_SERVER_ERROR',
+            status: 503,
+            code: 'INTERNAL_SERVER_ERROR',
         });
     }
 };
@@ -41,15 +41,15 @@ module.exports.updateComment = async function (comment) {
     if (!comment.userId || !comment.blogpostId) {
         throw new CustomError({
             message: 'comment should have an user and a blogpost',
-            code: 406,
-            status: 'NO_USER_AND_BLOGPOST_FOR_COMMENT_ERROR',
+            status: 406,
+            code: 'NO_USER_AND_BLOGPOST_FOR_COMMENT_ERROR',
         });
     }
     if (!comment.content) {
         throw new CustomError({
             message: 'Comment can\'t be empty',
-            code: 406,
-            status: 'NO_EMPTY_COMMENT_BODY_ERROR',
+            status: 406,
+            code: 'NO_EMPTY_COMMENT_BODY_ERROR',
         });
     }
     try {
@@ -63,8 +63,8 @@ module.exports.updateComment = async function (comment) {
         console.error(err);
         throw new CustomError({
             message: 'Internal server error',
-            code: 503,
-            status: 'INTERNAL_SERVER_ERROR',
+            status: 503,
+            code: 'INTERNAL_SERVER_ERROR',
         });
     }
 };

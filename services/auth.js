@@ -15,10 +15,10 @@ module.exports.auth = async function ({ username, password }) {
     const user = await userModel.findByName(username);
 
     if (!user) {
-        throw new CustomError({ code: 404, message: 'User not found', status: 'ERROR_USER_NOT_FOUND' });
+        throw new CustomError({ status: 404, message: 'User not found', code: 'ERROR_USER_NOT_FOUND' });
     }
     if (!await user.validatePassword(password)) {
-        throw new CustomError({ code: 406, message: 'Invalid password', status: 'ERROR_INVALID_PASSWORD' });
+        throw new CustomError({ status: 406, message: 'Invalid password', code: 'ERROR_INVALID_PASSWORD' });
     }
 
     return user.plain();
@@ -48,7 +48,7 @@ module.exports.register = async function ({
     const userModel = models.getModel('User');
 
     if (await userModel.findByName(username)) {
-        throw new CustomError({ code: 105, status: 'USERNAME_TAKEN_ERROR', message: 'Username already taken' });
+        throw new CustomError({ status: 406, code: 'USERNAME_TAKEN_ERROR', message: 'Username already taken' });
     }
     const generatedPassword = await userModel.generateHash(password);
     try {
@@ -57,9 +57,9 @@ module.exports.register = async function ({
         });
 
         return {
-            status: 'OK',
+            status: 200,
             message: 'User created successfully',
-            code: 200,
+            code: 'Ok',
         };
     } catch (err) {
         // TODO: better handling

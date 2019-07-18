@@ -9,8 +9,8 @@ module.exports.getBlogPostById = async function (id) {
         console.error(err);
         throw new CustomError({
             message: 'BlogPost not found',
-            code: 404,
-            status: 'ERROR_BLOGPOST_NOT_FOUND',
+            status: 404,
+            code: 'ERROR_BLOGPOST_NOT_FOUND',
         });
     }
 };
@@ -46,8 +46,8 @@ module.exports.updateBlogPost = async function (blogPost) {
     if (!blogPost.content) {
         throw new CustomError({
             message: 'BlogPost content mustn\'t be empty',
-            status: 'ERROR_BLOGPOST_EMPTY_CONTENT',
-            code: 406,
+            code: 'ERROR_BLOGPOST_EMPTY_CONTENT',
+            status: 406,
         });
     }
     try {
@@ -60,7 +60,7 @@ module.exports.updateBlogPost = async function (blogPost) {
     } catch (err) {
         console.error(err);
         return {
-            code: 503,
+            status: 503,
             error: 'Internal server error',
         };
     }
