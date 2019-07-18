@@ -45,6 +45,7 @@ module.exports = function (sequelize, DataTypes) {
 
     model.loadScopes = function (models) {
         this.addScope('withPosts', {
+            attributes: ['id', 'username', 'firstname', 'lastname'],
             include: [{
                 model: models.Blogpost,
                 required: false,
