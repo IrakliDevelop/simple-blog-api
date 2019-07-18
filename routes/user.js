@@ -1,13 +1,19 @@
 const router = require('express').Router();
 const { requireAuth } = require('../middlewares');
+const { User } = require('../services');
 
-router.post('/info', requireAuth, onInfoRequest);
+router.get('/info', requireAuth, onInfoRequest);
 
 // TODO: implement this
-// eslint-disable-next-line no-unused-vars
-function onInfoRequest(req, res, next) {
+async function onInfoRequest(req, res, next) {
     const { user } = req;
-    return res.json(user);
+    try {
+        const userInfo = await User.getUserInfo(user.username);
+        return res.json(userInfo);
+    } catch (err) {
+        console.error(err);
+        return next(err);
+    }
 }
 
 module.exports = router;
