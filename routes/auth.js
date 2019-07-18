@@ -33,6 +33,7 @@ async function onAuthRequest(req, res, next) {
         });
         return res.json({ token });
     } catch (err) {
+        console.error(err);
         return next(err);
     }
 }
