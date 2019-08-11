@@ -55,6 +55,12 @@ module.exports = function (sequelize, DataTypes) {
 
     // methods
     model.findByName = function (username) {
+        return this.findOne({
+            where: { username },
+        });
+    };
+
+    model.findByNameWithPosts = function (username) {
         return this.scope('withPosts').findOne({
             where: { username },
         });

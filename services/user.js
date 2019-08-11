@@ -10,7 +10,7 @@ module.exports.getUserInfo = async function (username) {
     const userModel = models.getModel('User');
 
     try {
-        return await userModel.findByName(username);
+        return await userModel.findByNameWithPosts(username);
     } catch (err) {
         console.error(err);
         throw err;

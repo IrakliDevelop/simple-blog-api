@@ -12,15 +12,15 @@ const config = require('../config');
  */
 module.exports.auth = async function ({ username, password }) {
     const userModel = models.getModel('User');
-    const user = await userModel.findByName(username);
+    const foundUser = await userModel.findByName(username);
 
-    if (!user) {
+    if (!foundUser) {
         throw new CustomError({ status: 404, message: 'User not found', code: 'ERROR_USER_NOT_FOUND' });
     }
-    if (!await user.validatePassword(password)) {
+    if (!await foundUser.validatePassword(password)) {
         throw new CustomError({ status: 406, message: 'Invalid password', code: 'ERROR_INVALID_PASSWORD' });
     }
-
+    const user = await userModel.findByNameWithPosts(username);
     return user.plain();
 };
 
