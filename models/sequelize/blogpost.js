@@ -41,6 +41,13 @@ module.exports = function (sequelize, DataTypes) {
         return this.scope('withComments').findByPk(id);
     };
 
+    model.getList = function (page = 1, limit = 15) {
+        return this.findAll({
+            offset: (page - 1) * limit,
+            limit: Number(limit),
+        });
+    };
+
     // TODO: test this
     model.updateOrCreateContent = async function (blogpost) {
         const [content, created] = await this.findOrCreate({

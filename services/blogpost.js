@@ -65,3 +65,18 @@ module.exports.updateBlogPost = async function (blogPost) {
         };
     }
 };
+
+module.exports.getBlogPostList = async function ({ page, limit }) {
+    const blogPostModel = models.getModel('Blogpost');
+    try {
+        const blogPosts = await blogPostModel.getList(page, limit);
+        return blogPosts.map(bp => bp.plain());
+    } catch (err) {
+        console.error(err);
+        throw new CustomError({
+            status: 503,
+            error: 'Internal server error',
+            code: 'SERVER_ERROR',
+        });
+    }
+};
